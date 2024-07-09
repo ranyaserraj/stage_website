@@ -9,7 +9,7 @@
                 <a class="nav-link active" id="v-pills-patients-tab" data-toggle="pill" href="#v-pills-patients" role="tab" aria-controls="v-pills-patients" aria-selected="true">Patients</a>
                 <a class="nav-link" id="v-pills-rendezvous-tab" href="{{ route('rendezvous.index') }}">Rendez-vous</a>
                 <a class="nav-link" id="v-pills-factures-tab" href="{{ route('facture.index') }}">Factures</a>
-                <a class="nav-link" id="v-pills-rapports-tab" href="{{ route('rapport.index') }}">Rapports</a>
+                <a class="nav-link" id="v-pills-rapports-tab" href="{{ route('hospitalization-reports.index') }}">Rapports</a>
             </div>
         </div>
         <div class="col-md-9">

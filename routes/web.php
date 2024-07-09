@@ -1,10 +1,10 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\RendezVousController;
 use App\Http\Controllers\FactureController;
-use App\Http\Controllers\RapportController;
-
+use App\Http\Controllers\HospitalizationReportController;
+use App\Http\Controllers\FormController;
 
 
 // Routes pour les patients
@@ -35,14 +35,8 @@ Route::get('/factures/{id}/edit', [FactureController::class, 'edit'])->name('fac
 Route::put('/factures/{id}', [FactureController::class, 'update'])->name('factures.update');
 Route::delete('/factures/{id}', [FactureController::class, 'destroy'])->name('factures.destroy');
 
-// Routes pour les rapports
-Route::get('/rapports', [RapportController::class, 'index'])->name('rapports.index');
-Route::get('/rapports/create', [RapportController::class, 'create'])->name('rapports.create');
-Route::post('/rapports', [RapportController::class, 'store'])->name('rapports.store');
-Route::get('/rapports/{id}', [RapportController::class, 'show'])->name('rapports.show');
-Route::get('/rapports/{id}/edit', [RapportController::class, 'edit'])->name('rapports.edit');
-Route::put('/rapports/{id}', [RapportController::class, 'update'])->name('rapports.update');
-Route::delete('/rapports/{id}', [RapportController::class, 'destroy'])->name('rapports.destroy');
+
+
 // routes/web.php
 
 Route::get('/rendezvous', 'RendezVousController@index')->name('rendezvous.index');
@@ -58,3 +52,31 @@ Route::get('/rendezvous/create', 'App\Http\Controllers\RendezVousController@crea
 
 
 Route::post('/rendezvous', [RendezVousController::class, 'store'])->name('rendezvous.store');
+
+
+//rapport 
+
+// Affiche la liste des rapports
+Route::get('/hospitalization-reports', [HospitalizationReportController::class, 'index'])->name('hospitalization-reports.index');
+
+// Affiche le formulaire pour créer un nouveau rapport
+Route::get('/hospitalization-reports/create', [HospitalizationReportController::class, 'create'])->name('hospitalization-reports.create');
+
+// Enregistre un nouveau rapport dans la base de données
+Route::post('/hospitalization-reports', [HospitalizationReportController::class, 'store'])->name('hospitalization-reports.store');
+
+// Affiche les détails d'un rapport spécifique
+Route::get('/hospitalization-reports/{hospitalizationReport}', [HospitalizationReportController::class, 'show'])->name('hospitalization-reports.show');
+
+// Affiche le formulaire pour modifier un rapport existant
+Route::get('/hospitalization-reports/{hospitalizationReport}/edit', [HospitalizationReportController::class, 'edit'])->name('hospitalization-reports.edit');
+
+// Met à jour un rapport existant dans la base de données
+Route::put('/hospitalization-reports/{hospitalizationReport}', [HospitalizationReportController::class, 'update'])->name('hospitalization-reports.update');
+
+// Supprime un rapport existant de la base de données
+Route::delete('/hospitalization-reports/{hospitalizationReport}', [HospitalizationReportController::class, 'destroy'])->name('hospitalization-reports.destroy');
+
+
+Route::post('/submit-form', [FormController::class, 'submit'])->name('form.submit');
+Route::get('/hospitalization-reports/{id}/pdf', [HospitalizationReportController::class, 'generatePdf'])->name('hospitalization-reports.generatePdf');

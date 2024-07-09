@@ -32,7 +32,10 @@
             <div class="form-group">
                 <label for="id_a">Acte (optionnel) :</label>
                 <select name="id_a" id="id_a" class="form-control">
-                    <!-- Ajoutez les options pour les actes si nécessaire -->
+                    <option value="">Sélectionnez un acte</option>
+                    @foreach ($actes as $acte)
+                        <option value="{{ $acte->id_a }}">{{ $acte->description }}</option>
+                    @endforeach
                 </select>
             </div>
             <!-- Ajoutez d'autres champs du formulaire pour le rendez-vous ici -->
@@ -41,4 +44,5 @@
         </form>
     </div>
 @endsection
+
 

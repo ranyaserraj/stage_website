@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Models\RendezVous;
 use Illuminate\Http\Request;
+use App\Models\Acte;
 
 class RendezVousController extends Controller
 {
@@ -17,7 +18,11 @@ class RendezVousController extends Controller
     public function create()
     {
         $patients = Patient::all(); // Récupérer tous les patients depuis la base de données
-        return view('rendezvous.create', compact('patients'));
+        $actes = Acte::all();
+        return view('rendezvous.create', [
+            'patients' => $patients,
+            'actes' => $actes,
+        ]);
     }
 
     public function store(Request $request)
