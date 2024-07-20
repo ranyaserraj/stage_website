@@ -1,10 +1,20 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
-use App\Http\Controllers\RendezVousController;
+use App\Http\Controllers\AppointmentControllerNew;
 use App\Http\Controllers\FactureController;
 use App\Http\Controllers\HospitalizationReportController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RequestController;
+use App\Http\Controllers\onlineController;
+use App\Http\Controllers\choiseController;
+use App\Http\Controllers\DoctorController;
+
+
+//home 
+Route::get('/user', [HomeController::class, 'index'])->name('utilisateur.acceuil');
 
 
 // Routes pour les patients
@@ -18,13 +28,6 @@ Route::delete('/patients/{id}', [PatientController::class, 'destroy'])->name('pa
 
 
 // Routes pour les rendez-vous
-Route::get('/rendez-vous', [RendezVousController::class, 'index'])->name('rendez-vous.index');
-Route::get('/rendez-vous/create', [RendezVousController::class, 'create'])->name('rendez-vous.create');
-Route::post('/rendez-vous', [RendezVousController::class, 'store'])->name('rendez-vous.store');
-Route::get('/rendez-vous/{id}', [RendezVousController::class, 'show'])->name('rendez-vous.show');
-Route::get('/rendez-vous/{id}/edit', [RendezVousController::class, 'edit'])->name('rendez-vous.edit');
-Route::put('/rendez-vous/{id}', [RendezVousController::class, 'update'])->name('rendez-vous.update');
-Route::delete('/rendez-vous/{id}', [RendezVousController::class, 'destroy'])->name('rendez-vous.destroy');
 
 // Routes pour les factures
 Route::get('/factures', [FactureController::class, 'index'])->name('factures.index');
@@ -39,7 +42,7 @@ Route::delete('/factures/{id}', [FactureController::class, 'destroy'])->name('fa
 
 // routes/web.php
 
-Route::get('/rendezvous', 'RendezVousController@index')->name('rendezvous.index');
+
 // routes/web.php
 
 Route::get('/factures', 'FactureController@index')->name('facture.index');
@@ -51,7 +54,7 @@ Route::get('/rendezvous', 'App\Http\Controllers\RendezVousController@index')->na
 Route::get('/rendezvous/create', 'App\Http\Controllers\RendezVousController@create')->name('rendezvous.create');
 
 
-Route::post('/rendezvous', [RendezVousController::class, 'store'])->name('rendezvous.store');
+
 
 
 //rapport 
@@ -80,3 +83,50 @@ Route::delete('/hospitalization-reports/{hospitalizationReport}', [Hospitalizati
 
 Route::post('/submit-form', [FormController::class, 'submit'])->name('form.submit');
 Route::get('/hospitalization-reports/{id}/pdf', [HospitalizationReportController::class, 'generatePdf'])->name('hospitalization-reports.generatePdf');
+
+//auth 
+
+Route::get('login', [AuthController::class, 'index'])->name('login');
+Route::post('post-login', [AuthController::class, 'postLogin'])->name('login.post');
+Route::get('registration', [AuthController::class, 'registration'])->name('register');
+Route::post('post-registration', [AuthController::class, 'postRegistration'])->name('register.post');
+Route::get('dashboard', [AuthController::class, 'dashboard']);
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('dashboardd', [AuthController::class, 'dashboardd'])->name('dashboardd');
+Route::get('dashboarddd', [AuthController::class, 'dashboarddd'])->name('dashboarddd');
+Route::get('/request', [RequestController::class, 'index'])->name('request.index');
+
+
+
+
+//administrator
+
+Route::get('/', [choiseController::class, 'choiseAdministrator'])->name('administrateur.choise');
+
+
+
+
+
+
+
+
+
+
+//Appointment 
+
+
+
+Route::get('/appointments', [AppointmentControllerNew::class, 'index'])->name('appointments.index');
+Route::get('/appointments/create', [AppointmentControllerNew::class, 'create'])->name('appointments.create');
+Route::post('/appointments', [AppointmentControllerNew::class, 'store'])->name('appointments.store');
+Route::get('/appointments/{id}', [AppointmentControllerNew::class, 'show'])->name('appointments.show');
+Route::get('/appointments/{id}/edit', [AppointmentControllerNew::class, 'edit'])->name('appointments.edit');
+Route::put('/appointments/{id}', [AppointmentControllerNew::class, 'update'])->name('appointments.update');
+Route::delete('/appointments/{id}', [AppointmentControllerNew::class, 'destroy'])->name('appointments.destroy');
+
+
+
+
+Route::get('/demande', [OnlineController::class, 'showForm'])->name('online.rendForm');
+Route::post('/demande', [OnlineController::class, 'submitDemande'])->name('online.submitDemande');
+Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');

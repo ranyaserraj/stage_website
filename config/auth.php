@@ -16,6 +16,7 @@ return [
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        
     ],
 
     /*
@@ -40,6 +41,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        
+         'secre' => [
+             'driver' => 'session',
+             'provider' => 'secretaires',
+        ],
     ],
 
     /*
@@ -59,12 +65,18 @@ return [
     |
     */
 
-    'providers' => [
+     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
-
+       
+         
+        
+         'secretaires' => [
+             'driver' => 'eloquent',
+             'model' =>env('AUTH_MODEL', App\Models\Secre::class), 
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
@@ -94,6 +106,18 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'medecin' => [
+            'provider' => 'medecins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'secretaire' => [
+            'provider' => 'secretaires',
+            'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],

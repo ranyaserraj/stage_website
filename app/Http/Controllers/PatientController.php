@@ -6,11 +6,36 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-    public function index()
-    {
-        $patients = Patient::all();
-        return view('patients.index', compact('patients'));
+    public function index(Request $request)
+{
+    $query = Patient::query();
+
+    if ($request->filled('nom')) {
+        $query->where('Nom_p', 'like', '%' . $request->input('nom') . '%');
     }
+    if ($request->filled('prenom')) {
+        $query->where('Prenom_p', 'like', '%' . $request->input('prenom') . '%');
+    }
+    if ($request->filled('adresse')) {
+        $query->where('Adresse_p', 'like', '%' . $request->input('adresse') . '%');
+    }
+    if ($request->filled('date_naissance')) {
+        $query->whereDate('Date_Naissance_p', $request->input('date_naissance'));
+    }
+    if ($request->filled('sexe')) {
+        $query->where('Sexe_p', $request->input('sexe'));
+    }
+    if ($request->filled('telephone')) {
+        $query->where('Telephone_p', 'like', '%' . $request->input('telephone') . '%');
+    }
+    if ($request->filled('email')) {
+        $query->where('Email_p', 'like', '%' . $request->input('email') . '%');
+    }
+
+    $patients = $query->get();
+
+    return view('patients.index', compact('patients'));
+}
 
     public function create()
     {
