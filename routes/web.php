@@ -2,7 +2,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentControllerNew;
-use App\Http\Controllers\FactureController;
 use App\Http\Controllers\HospitalizationReportController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\Auth\AuthController;
@@ -11,7 +10,7 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\onlineController;
 use App\Http\Controllers\choiseController;
 use App\Http\Controllers\DoctorController;
-
+use App\Http\Controllers\FactureController;
 
 //home 
 Route::get('/user', [HomeController::class, 'index'])->name('utilisateur.acceuil');
@@ -130,3 +129,9 @@ Route::delete('/appointments/{id}', [AppointmentControllerNew::class, 'destroy']
 Route::get('/demande', [OnlineController::class, 'showForm'])->name('online.rendForm');
 Route::post('/demande', [OnlineController::class, 'submitDemande'])->name('online.submitDemande');
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
+
+
+
+//factures
+Route::get('factures', [FactureController::class, 'index'])->name('factures.index');
+Route::get('factures/pdf/{id}', [FactureController::class, 'generatePDF'])->name('factures.pdf');

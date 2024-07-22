@@ -1,4 +1,3 @@
-<!-- resources/views/patients/create.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -45,7 +44,9 @@
                 <label for="id_imm_assurance">ID Assurance</label>
                 <input type="text" class="form-control" id="id_imm_assurance" name="id_imm_assurance">
             </div>
-            <!-- Ajouter d'autres champs du formulaire si nécessaire -->
+            <!-- Ajouter un bouton pour accéder aux factures -->
+            <a href="{{ route('factures.index') }}" class="btn btn-secondary">Voir les Factures</a>
+            <!-- Bouton pour enregistrer le patient -->
             <button type="submit" class="btn btn-primary">Enregistrer</button>
         </form>
     </div>

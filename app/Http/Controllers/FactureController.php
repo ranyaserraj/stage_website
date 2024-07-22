@@ -1,73 +1,43 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Facture;
 use Illuminate\Http\Request;
+use App\Models\Appo;
+use App\Models\Facture;
+use App\Models\Patient;
+use App\Models\Acte;
+use PDF;
 
 class FactureController extends Controller
 {
+    // Afficher la liste des factures
     public function index()
     {
-        $factures = Facture::all();
+        $appos = Appo::all();
+        $factures = [];
+
+        foreach ($appos as $appo) {
+            $acte = $appo->acte(); // Obtenir l'acte correspondant
+            $total = $acte ? $acte->cout : 0;
+            $factures[] = [
+                'appo' => $appo,
+                'total' => $total,
+            ];
+        }
+
         return view('factures.index', compact('factures'));
     }
 
-    public function create()
+    // Générer un PDF pour une facture spécifique
+    public function generatePDF($id)
     {
-        return view('factures.create');
-    }
+        $appo = Appo::findOrFail($id);
+        $acte = $appo->acte(); // Obtenir l'acte correspondant
+        $total = $acte ? $acte->cout : 0;
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'date_f' => 'required|date',
-            'Montant' => 'required|numeric',
-            'id_p' => 'required|exists:patients,id',
-            'id_r' => 'nullable|exists:rendez_vous,id',
-            // Ajoutez les autres champs avec leurs règles de validation
-        ]);
+        $pdf = PDF::loadView('factures.pdf', compact('appo', 'total'));
 
-        Facture::create($validatedData);
-
-        return redirect()->route('factures.index')
-            ->with('success', 'Facture ajoutée avec succès.');
-    }
-
-    public function show($id)
-    {
-        $facture = Facture::findOrFail($id);
-        return view('factures.show', compact('facture'));
-    }
-
-    public function edit($id)
-    {
-        $facture = Facture::findOrFail($id);
-        return view('factures.edit', compact('facture'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'date_f' => 'required|date',
-            'Montant' => 'required|numeric',
-            'id_p' => 'required|exists:patients,id',
-            'id_r' => 'nullable|exists:rendez_vous,id',
-            // Ajoutez les autres champs avec leurs règles de validation
-        ]);
-
-        $facture = Facture::findOrFail($id);
-        $facture->update($validatedData);
-
-        return redirect()->route('factures.index')
-            ->with('success', 'Facture modifiée avec succès.');
-    }
-
-    public function destroy($id)
-    {
-        $facture = Facture::findOrFail($id);
-        $facture->delete();
-
-        return redirect()->route('factures.index')
-            ->with('success', 'Facture supprimée avec succès.');
+        return $pdf->download('facture.pdf');
     }
 }

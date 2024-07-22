@@ -17,4 +17,8 @@ class Appo extends Model
     protected $table = 'appo'; // Assurez-vous que la table correspond au nom de votre migration
 
     // Définir d'autres relations si nécessaire, par exemple avec Patient, Medecin, Secretaire, etc.
-}
+    public function acte()
+    {
+        return Acte::where('description', $this->nom_acte_)->first();
+    }
+    }

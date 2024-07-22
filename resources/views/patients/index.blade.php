@@ -7,7 +7,7 @@
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="v-pills-patients-tab" data-toggle="pill" href="#v-pills-patients" role="tab" aria-controls="v-pills-patients" aria-selected="true">Patients</a>
                 <a class="nav-link" id="v-pills-rendezvous-tab" href="{{ route('appointments.index') }}">Rendez-vous</a>
-                <a class="nav-link" id="v-pills-factures-tab" href="{{ route('facture.index') }}">Factures</a>
+                <a class="nav-link" id="v-pills-factures-tab" href="{{ route('factures.index') }}">Factures</a>
                 <a class="nav-link" id="v-pills-rapports-tab" href="{{ route('hospitalization-reports.index') }}">Rapports</a>
             </div>
         </div>

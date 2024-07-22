@@ -20,10 +20,10 @@ class Patient extends Model
     ];
 
     // Relation avec les rendez-vous
-    public function rendezVous()
+    
+    public function appos()
     {
-        return $this->hasMany(RendezVous::class, 'id_p', 'id_p');
+        return $this->hasMany(Appo::class, 'patient_id'); // Assurez-vous que 'patient_id' est bien le champ de clé étrangère
     }
-
     // Ajoutez d'autres relations au besoin
 }
